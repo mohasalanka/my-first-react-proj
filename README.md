@@ -1,4 +1,4 @@
-## my-first-react-proj
+## My-First-React-Proj
 A simple ReactJS project that allows users to add, search, sort, and delete transactions.
 
 # Technologies Used
