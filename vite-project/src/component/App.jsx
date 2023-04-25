@@ -1,10 +1,19 @@
-import { useState } from 'react';
-import { TransactionTable, TransactionForm, SearchBar } from './components';
+import React, { useState, useEffect } from 'react';
 import MyComponent from './MyComponent';
 import './App.css';
+import TransactionForm from './TransactionForm';
+import TransactionTable from './TransactionTable';
+import SearchBar from './SearchBar';
 
 function App() {
   const [transactions, setTransactions] = useState([]);
+
+  useEffect(() => {
+    fetch('http://example.com/transactions')
+      .then(response => response.json())
+      .then(data => setTransactions(data))
+      .catch(error => console.error(error));
+  }, []);
 
   const handleAddTransaction = (newTransaction) => {
     setTransactions([...transactions, newTransaction]);
@@ -24,7 +33,7 @@ function App() {
       <TransactionTable transactions={transactions} />
       <MyComponent />
     </div>
-  );
+  )
 }
 
 export default App;
