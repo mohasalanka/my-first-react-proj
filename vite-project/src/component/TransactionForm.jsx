@@ -1,18 +1,26 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 function TransactionForm({ addTransaction }) {
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
   const [amount, setAmount] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newTransaction = {
       description: description,
       category: category,
       amount: amount,
     };
-    addTransaction(newTransaction);
+    const response = await fetch('/api/transactions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newTransaction)
+    });
+    const data = await response.json();
+    addTransaction(data);
     setDescription('');
     setCategory('');
     setAmount('');

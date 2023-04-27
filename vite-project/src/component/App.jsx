@@ -9,7 +9,7 @@ function App() {
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
-    fetch('http://example.com/transactions')
+    fetch('http://localhost:3000/transactions')
       .then(response => response.json())
       .then(data => setTransactions(data))
       .catch(error => console.error(error));
