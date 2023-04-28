@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 
-function TransactionForm({ addTransaction }) {
+function TransactionForm({  transactions, setTransactions }) {
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
   const [amount, setAmount] = useState('');
+  const [date, setDate] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -11,19 +12,26 @@ function TransactionForm({ addTransaction }) {
       description: description,
       category: category,
       amount: amount,
+      date: date
     };
-    const response = await fetch('/api/transactions', {
+    const response = await fetch('http://localhost:3000/transactions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(newTransaction)
-    });
+    })
+    .then(response => response.json())
+    .then(data => {
+      setTransactions([...transactions,data])
+      setDescription('');
+      setCategory('');
+      setAmount('');
+      setDate('');
+    })
     const data = await response.json();
-    addTransaction(data);
-    setDescription('');
-    setCategory('');
-    setAmount('');
+    // addTransaction(data);
+    
   };
 
   return (
@@ -52,6 +60,15 @@ function TransactionForm({ addTransaction }) {
           type="number"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
+        />
+      </label>
+      <br />
+      <label>
+        Date:
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
         />
       </label>
       <br />

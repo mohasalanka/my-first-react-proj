@@ -15,9 +15,6 @@ function App() {
       .catch(error => console.error(error));
   }, []);
 
-  const handleAddTransaction = (newTransaction) => {
-    setTransactions([...transactions, newTransaction]);
-  };
 
   const handleSearchChange = (searchTerm) => {
     const filteredTransactions = transactions.filter((transaction) => {
@@ -28,9 +25,9 @@ function App() {
 
   return (
     <div>
-      <TransactionForm onAddTransaction={handleAddTransaction} />
+      <TransactionForm transactions={transactions} setTransactions={setTransactions} />
       <SearchBar onSearchChange={handleSearchChange} />
-      <TransactionTable transactions={transactions} />
+      <TransactionTable transactions={transactions} setTransactions={setTransactions} />
       <MyComponent />
     </div>
   )

@@ -1,7 +1,17 @@
 import React from 'react';
+import TransactionItem from './TransactionItem';
 
 function TransactionTable(props) {
-  const { transactions } = props;
+  const { transactions, setTransactions } = props;
+
+  
+
+  const transactionItem = transactions.map((transaction) => {
+    return <TransactionItem transaction={transaction} transactions={transactions} setTransactions={setTransactions} />
+  }
+    )
+
+
 
   return (
     <table>
@@ -14,14 +24,7 @@ function TransactionTable(props) {
         </tr>
       </thead>
       <tbody>
-        {transactions.map((transaction) => (
-          <tr key={transaction.id}>
-            <td>{transaction.date}</td>
-            <td>{transaction.description}</td>
-            <td>{transaction.category}</td>
-            <td>{transaction.amount}</td>
-          </tr>
-        ))}
+       {transactionItem}
       </tbody>
     </table>
   );
